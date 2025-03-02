@@ -1,1 +1,98 @@
-<h1>Hello Ward</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Google Sheets Data</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #loading {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Google Sheets Data</h1>
+        <div id="loading">Loading data...</div>
+        <table id="dataTable" style="display: none;">
+            <thead id="tableHeader"></thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        // Replace with your API key and Spreadsheet ID
+        const API_KEY = 'YOUR_API_KEY_HERE';
+        const SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID_HERE';
+        const RANGE = 'Sheet1!A1:Z'; // Adjust range as needed
+
+        async function fetchSheetData() {
+            try {
+                const response = await fetch(
+                    `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`
+                );
+                
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                displayData(data.values);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('loading').textContent = 
+                    'Error loading data. Please check your API key and spreadsheet settings.';
+            }
+        }
+
+        function displayData(values) {
+            if (!values || values.length === 0) {
+                document.getElementById('loading').textContent = 'No data found';
+                return;
+            }
+
+            const headerRow = values[0];
+            const dataRows = values.slice(1);
+
+            // Create table header
+            const thead = document.getElementById('tableHeader');
+            const headerHTML = headerRow.map(header => `<th>${header}</th>`).join('');
+            thead.innerHTML = `<tr>${headerHTML}</tr>`;
+
+            // Create table body
+            const tbody = document.getElementById('tableBody');
+            const bodyHTML = dataRows.map(row => {
+                const cells = row.map(cell => `<td>${cell}</td>`).join('');
+                return `<tr>${cells}</tr>`;
+            }).join('');
+            tbody.innerHTML = bodyHTML;
+
+            // Show table and hide loading
+            document.getElementById('dataTable').style.display = 'table';
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Fetch data when page loads
+        window.onload = fetchSheetData;
+    </script>
+</body>
+</html>
