@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>29th Ward Bulletin Data</title>
+    <title>Google Sheets Data Display</title>
     <style>
         table {
             border-collapse: collapse;
             width: 100%;
-            margin: 20px 0;
+            max-width: 800px;
+            margin: 20px auto;
         }
         th, td {
             border: 1px solid #ddd;
@@ -19,33 +20,35 @@
             background-color: #f2f2f2;
         }
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        #loading {
             text-align: center;
             padding: 20px;
+        }
+        #refreshBtn {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>29th Ward Bulletin</h1>
-        <div id="loading">Loading data...</div>
-        <table id="dataTable" style="display: none;">
-            <thead id="tableHeader"></thead>   
-            <tbody id="tableBody"></tbody>
-        </table>
+        <h1>Google Sheets Data</h1>
+        <button id="refreshBtn" onclick="getSheetData()">Refresh Data</button>
+        <div id="dataContainer">
+            <table id="dataTable">
+                <thead id="tableHeader"></thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
     </div>
 
     <script>
         // Replace with your API key and Spreadsheet ID
         const API_KEY = 'AIzaSyCXaK1uxsA4c0yXauCkyieaz1YaO2QRKqE';
         const SPREADSHEET_ID = '1ypZ1VciQa5WLGJnTCc08Pe0RTZ6TJYuKf8QPwc6sv7w';
-        const RANGE = 'bulletin_sheet!A1:Z'; // Adjust range as needed
+        const RANGE = 'Sheet1!A1:Z'; // Adjust range as needed
 
-        async function fetchSheetData() {
+        async function getSheetData() {
             try {
                 const response = await fetch(
                     `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`
@@ -59,40 +62,40 @@
                 displayData(data.values);
             } catch (error) {
                 console.error('Error fetching data:', error);
-                document.getElementById('loading').textContent = 
+                document.getElementById('dataContainer').innerHTML = 
                     'Error loading data. Please check your API key and spreadsheet settings.';
             }
         }
 
         function displayData(values) {
             if (!values || values.length === 0) {
-                document.getElementById('loading').textContent = 'No data found';
+                document.getElementById('dataContainer').innerHTML = 'No data found.';
                 return;
             }
 
-            const headerRow = values[0];
-            const dataRows = values.slice(1);
-
             // Create table header
-            const thead = document.getElementById('tableHeader');
-            const headerHTML = headerRow.map(header => `<th>${header}</th>`).join('');
-            thead.innerHTML = `<tr>${headerHTML}</tr>`;
+            const headerRow = values[0];
+            let headerHTML = '<tr>';
+            headerRow.forEach(cell => {
+                headerHTML += `<th>${cell}</th>`;
+            });
+            headerHTML += '</tr>';
+            document.getElementById('tableHeader').innerHTML = headerHTML;
 
             // Create table body
-            const tbody = document.getElementById('tableBody');
-            const bodyHTML = dataRows.map(row => {
-                const cells = row.map(cell => `<td>${cell}</td>`).join('');
-                return `<tr>${cells}</tr>`;
-            }).join('');
-            tbody.innerHTML = bodyHTML;
-
-            // Show table and hide loading
-            document.getElementById('dataTable').style.display = 'table';
-            document.getElementById('loading').style.display = 'none';
+            let bodyHTML = '';
+            for (let i = 1; i < values.length; i++) {
+                bodyHTML += '<tr>';
+                values[i].forEach(cell => {
+                    bodyHTML += `<td>${cell || ''}</td>`;
+                });
+                bodyHTML += '</tr>';
+            }
+            document.getElementById('tableBody').innerHTML = bodyHTML;
         }
 
-        // Fetch data when page loads
-        window.onload = fetchSheetData;
+        // Load data when page loads
+        window.onload = getSheetData;
     </script>
 </body>
 </html>
