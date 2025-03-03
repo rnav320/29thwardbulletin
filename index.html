@@ -4,31 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Sheets Data Display</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            max-width: 800px;
-            margin: 20px auto;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .container {
-            text-align: center;
-            padding: 20px;
-        }
-        #refreshBtn {
-            padding: 10px 20px;
-            margin: 10px;
-            cursor: pointer;
-        }
-    </style>
+<style>
+.container {
+  display: flex; /* Use flexbox for layout */
+  width: 100%; /* Take full width of the parent */
+}
+
+.column {
+  flex: 1; /* Each column takes equal space */
+  padding: 20px; /* Add some padding for spacing */
+  box-sizing: border-box; /* Include padding in width/height */
+}
+
+.left-column {
+  background-color: #f0f0f0; /* Light grey background for left column */
+}
+
+.right-column {
+  background-color: #e0e0e0; /* Slightly darker grey for right column */
+}
+
+/* Optional: For smaller screens, stack columns vertically */
+@media (max-width: 600px) {
+  .container {
+    flex-direction: column; /* Stack columns vertically */
+  }
+}
+</style>
 </head>
 <body>
     <div class="container">
