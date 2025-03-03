@@ -8,7 +8,8 @@
         table {
             border-collapse: collapse;
             width: 100%;
-            margin: 20px 0;
+            max-width: 800px;
+            margin: 20px auto;
         }
         th, td {
             border: 1px solid #ddd;
@@ -19,15 +20,15 @@
             background-color: #f2f2f2;
         }
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        #loading {
             text-align: center;
             padding: 20px;
         }
-      </style>
+        #refreshBtn {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
