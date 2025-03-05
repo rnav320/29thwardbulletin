@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheet Data Table</title>
+    <style>
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .header-column {
+            width: 30%;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <table id="dataTable">
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <script>
+        // Replace with your Google Sheet ID and API Key
+        const SHEET_ID = 'YOUR_SHEET_ID_HERE';
+        const API_KEY = 'YOUR_API_KEY_HERE';
+        const RANGE = 'Sheet1!A1:Z'; // Adjust range as needed
+
+        async function fetchSheetData() {
+            try {
+                const response = await fetch(
+                    `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`
+                );
+                const data = await response.json();
+                
+                if (data.values && data.values.length > 0) {
+                    displayData(data.values);
+                } else {
+                    document.getElementById('tableBody').innerHTML = '<tr><td colspan="2">No data found</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('tableBody').innerHTML = '<tr><td colspan="2">Error loading data</td></tr>';
+            }
+        }
+
+        function displayData(values) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = ''; // Clear existing content
+
+            // Get headers (first row)
+            const headers = values[0];
+            
+            // Get rest of the data (excluding headers)
+            const dataRows = values.slice(1);
+
+            // Create rows for each header
+            headers.forEach((header, index) => {
+                const tr = document.createElement('tr');
+                
+                // Header cell
+                const th = document.createElement('td');
+                th.className = 'header-column';
+                th.textContent = header;
+                tr.appendChild(th);
+
+                // Data cell
+                const td = document.createElement('td');
+                // Collect all values for this column
+                const columnData = dataRows.map(row => row[index] || '').join('<br>');
+                td.innerHTML = columnData;
+                tr.appendChild(td);
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Fetch data when page loads
+        window.onload = fetchSheetData;
+    </script>
+</body>
+</html>
