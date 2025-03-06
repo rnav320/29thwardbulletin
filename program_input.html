@@ -6,7 +6,7 @@
   <script>
     // Replace with your Google Sheets ID and sheet name
     const SPREADSHEET_ID = '1ypZ1VciQa5WLGJnTCc08Pe0RTZ6TJYuKf8QPwc6sv7w';
-    const SHEET_NAME = 'Program29'; // Or whatever your sheet is called.
+    const SHEET_NAME = 'Sheet1'; // Or whatever your sheet is called.
     const API_KEY = 'AIzaSyCXaK1uxsA4c0yXauCkyieaz1YaO2QRKqE'; // If using API key authentication
 
     // Function to fetch data from Google Sheets API
@@ -67,7 +67,7 @@
 
     // Function to update data in Google Sheets
     function updateData() {
-      const rowIndex = parseInt($('#rowIndex').val()) + 1 +1; // +1 to account for headers, and another +1 because the google sheets api is 1 indexed
+      const rowIndex = parseInt($('#rowIndex').val()) + 1; // +1 to account for headers, and another +1 because the google sheets api is 1 indexed
       const values = [];
       $('#editForm input[type="text"]').each(function() {
         values.push($(this).val());
