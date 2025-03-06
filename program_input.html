@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Form to Edit Sheet Data</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    // Replace with your Google Sheets ID and sheet name
+    const SPREADSHEET_ID = '1ypZ1VciQa5WLGJnTCc08Pe0RTZ6TJYuKf8QPwc6sv7w';
+    const SHEET_NAME = 'Program29'; // Or whatever your sheet is called.
+    const API_KEY = 'AIzaSyCXaK1uxsA4c0yXauCkyieaz1YaO2QRKqE'; // If using API key authentication
+
+    // Function to fetch data from Google Sheets API
+    function fetchData() {
+      const range = SHEET_NAME; // Fetch all data
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?key=${API_KEY}`; // Append API key if using. Without API key, make it public.
+      // If your sheet is public, remove the ?key=${API_KEY} from the url.
+
+      $.ajax({
+        url: url,
+        success: function(response) {
+          displayData(response.values);
+        },
+        error: function(error) {
+          console.error('Error fetching data:', error);
+          $('#dataDisplay').html('<p>Error loading data. Please check console.</p>');
+        }
+      });
+    }
+
+    // Function to display data in a table and create edit form
+    function displayData(data) {
+      let tableHtml = '<table border="1"><thead><tr>';
+      if (data && data.length > 0) {
+        // Create table headers
+        data[0].forEach(header => {
+          tableHtml += `<th>${header}</th>`;
+        });
+        tableHtml += '<th>Actions</th></tr></thead><tbody>';
+
+        // Create table rows
+        for (let i = 1; i < data.length; i++) { // Start from 1 to skip headers
+          tableHtml += `<tr>`;
+          data[i].forEach(cell => {
+            tableHtml += `<td>${cell}</td>`;
+          });
+          tableHtml += `<td><button onclick="showEditForm(${i}, '${data[0].join("','")}', '${data[i].join("','")}')">Edit</button></td></tr>`;
+        }
+        tableHtml += '</tbody></table>';
+        $('#dataDisplay').html(tableHtml);
+      } else {
+        $('#dataDisplay').html('<p>No data found.</p>');
+      }
+    }
+
+    // Function to show the edit form
+    function showEditForm(rowIndex, headers, rowData) {
+      const headerArray = headers.split("','");
+      const dataArray = rowData.split("','");
+      let formHtml = `<form id="editForm">`;
+      for (let i = 0; i < headerArray.length; i++) {
+        formHtml += `<label>${headerArray[i]}:</label><input type="text" name="${headerArray[i]}" value="${dataArray[i]}"><br>`;
+      }
+      formHtml += `<input type="hidden" id="rowIndex" value="${rowIndex}">`;
+      formHtml += `<button type="button" onclick="updateData()">Update</button><button type="button" onclick="$('#editForm').remove()">Cancel</button></form>`;
+      $('#editFormContainer').html(formHtml);
+    }
+
+    // Function to update data in Google Sheets
+    function updateData() {
+      const rowIndex = parseInt($('#rowIndex').val()) + 1; // +1 to account for headers, and another +1 because the google sheets api is 1 indexed
+      const values = [];
+      $('#editForm input[type="text"]').each(function() {
+        values.push($(this).val());
+      });
+
+      const range = `${SHEET_NAME}!A${rowIndex}:${String.fromCharCode(64 + values.length)}${rowIndex}`; // A1 notation
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?valueInputOption=USER_ENTERED&key=${API_KEY}`; // Append API key if using.
+
+      $.ajax({
+        url: url,
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify({ values: [values] }),
+        success: function(response) {
+          console.log('Data updated:', response);
+          $('#editForm').remove();
+          fetchData(); // Refresh data display
+        },
+        error: function(error) {
+          console.error('Error updating data:', error);
+        }
+      });
+    }
+
+    $(document).ready(function() {
+      fetchData();
+    });
+  </script>
+</head>
+<body>
+  <div id="dataDisplay">Loading...</div>
+  <div id="editFormContainer"></div>
+
+  <p>To use this, replace YOUR_SPREADSHEET_ID, SHEET_NAME, and YOUR_API_KEY with your actual values.</p>
+  <p>Make sure your Google Sheets API is enabled in your Google Cloud Project.</p>
+  <p>If you make your sheet public, you can remove the API key from the URL's.</p>
+
+</body>
+</html>
