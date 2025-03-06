@@ -67,7 +67,7 @@
 
     // Function to update data in Google Sheets
     function updateData() {
-      const rowIndex = parseInt($('#rowIndex').val()) + 1; // +1 to account for headers, and another +1 because the google sheets api is 1 indexed
+      const rowIndex = parseInt($('#rowIndex').val()) + 1 +1; // +1 to account for headers, and another +1 because the google sheets api is 1 indexed
       const values = [];
       $('#editForm input[type="text"]').each(function() {
         values.push($(this).val());
