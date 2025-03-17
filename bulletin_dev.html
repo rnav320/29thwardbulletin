@@ -1,61 +1,339 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>From the Bishop</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>29th Ward Bulletin</title>
+    <style>
+        .banner {
+    max-width: 100%; /* Ensure the image doesn't exceed its container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove any default inline spacing */
+    margin: 0 auto; /* center the image*/        
+  }
+  body {  
+    background-color: #000032; /* navy blue */  
+    margin: 0; /* Remove default body margin */
+  }
+        table {
+            font-family: 'arial', serif;
+            font-size: 15px;
+            font-weight: normal;
+            font-style: normal;
+            background-color: #fffff; /* white top banner */
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            margin: 10px auto;
+        }
+        th, td {
+            border: 1px solid #000000;
+            padding: 8px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .container {
+            background-color: #ffffff; /* white background color */
+            text-align: center;
+            padding: 10px;
+        }
+        #refreshBtn {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .WardOrg {
+            font-family: 'arial', serif;
+            font-size: 12px;
+            font-weight: normal;
+            font-style: normal;
+            border: 1px solid #000000;
+            background-color: #fffff;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            margin: 10px auto;
+            background-color: #dddddd;
+            text-align: center;
+            padding: 20px;    
+        }
+        .header-column {
+            width: 30%;
+            font-weight: plain;
+            background-color: #ddd; /* gray background color */
+        }
+    </style>
 </head>
 <body>
-
-  <h1>From the Bishop</h1>
-
-  <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQFRKCk4puUkFApE_gqTkzNXt4Y2yHF3GuONKomHmqYuM7VT5EQyItxOaJVvApywmbWCCdcVrIRMnOU/pubhtml?widget=true&amp;headers=false"" width="640" height="480" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-
-  <div id="websiteContent">
+    <img src="header.jpg" alt="Banner Image" class="banner">
+    <div class="container">
+    <table id="dataTable">
+        <tbody id="tableBody"></tbody>
+    </table>
+    <button id="refreshBtn" onclick="fetchSheetData()">Refresh Data</button>
+    <div>
+        <hr>
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQFRKCk4puUkFApE_gqTkzNXt4Y2yHF3GuONKomHmqYuM7VT5EQyItxOaJVvApywmbWCCdcVrIRMnOU/pubhtml?widget=true&amp;headers=false"" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0"></iframe>
+        <hr>
     </div>
+    <p>
+        <img src="rsMar23.jpg" alt="RS Announcement" class="banner">
+    </p>    
+    <a href="https://ridgevuestake.as.me/schedule/6adfb276/appointment/18481410?appointmentTypeIds[]=18481410"><img src="temple-interview-banner.jpg" alt="Meridian Idaho Temple" class="banner"></a>    
+    <div class-"WardOrg">
+        <h2>Ward Organization</h2>
+        <table class="WardOrg">
+            <tr> 
+                <td>Craig Hanks</td>
+                <td>Bishop</td>
+                <td><a href="tel:+12082834936">(208) 283-4936</a></td>
+              </tr>
+              <tr>
+                <td>Justin Jesperson</td>
+                <td>Bishopric First Counselor</td>
+                <td><a href="tel:+16193375983">(619) 337-5983</a></td>  
+            </tr>
+            <tr>
+                <td>Skyler Steeves</td>
+                <td>Bishopric Second Counselor</td>
+                <td><a href="tel:+12088719053">(208) 871-9053</a></td>  
+            </tr>
+            <tr>
+                <td>Ricky Adams</td>
+                <td>Ward Executive Secretary</td>
+                <td><a href="tel:+4694229443">(469) 422-9443</a></td>
+            </tr>
+            <tr>
+                <td>Kent Banner</td>
+                <td>Ward Assistant Executive Secretary</td>
+                <td><a href="tel:+2084059182">(208) 405-9182</a></td>  
+            </tr>
+            <tr>
+                <td>Ray Miles</td>
+                <td>Ward Clerk</td>
+                <td><a href="tel:+12088803237">(208) 880-3237</a></td>  
+            </tr>   
+            <tr>
+                <td>Benjamin Chad Dance</td>
+                <td>Ward Assistant Clerk-Finance</td>
+                <td><a href="tel:+12086009181">(208) 600-9181</a></td>  
+            </tr>
+            <tr>
+                <td>Joseph Kunz</td>
+                <td>Elders Quorum President</td>
+                <td><a href="tel:+12088693439">(208) 869-3439</a></td>  
+            </tr>
+            <tr>
+                <td>Jared Owens</td>
+                <td>Elders Quorum First Counselor</td>
+                <td><a href="tel:+2089081899">(208) 908-1899</a></td>  
+            </tr>
+            <tr>
+                <td>Ricky Adams</td>
+                <td>Elders Quorum Second Counselor</td>
+                <td><a href="tel:+14694229443">(469) 422-9443</a></td>  
+            </tr>   
+            <tr>
+                <td>Coltin Barney</td>
+                <td>Elders Quorum Secretary</td>
+                <td><a href="tel:+12088712249">(208) 871-2249</a></td>  
+            </tr>
+            <tr>
+                <td>Kathryn Kory</td>
+                <td>Relief Society President</td>
+                <td><a href="tel:+15098080678">(509) 808-0678</a></td> 
+            </tr>
+            <tr>
+                <td>Hope Fredrickson</td>
+                <td>Relief Society First Counselor</td>
+                <td><a href="tel:+12088631732">(208) 863-1732</a></td>  
+            </tr>
+            <tr>
+                <td>Evelyn Heaton</td>
+                <td>Relief Society Second Counselor</td>
+                <td><a href="tel:+12082041786">(208) 204-1786</a></td>  
+            </tr>   
+            <tr>
+                <td>Alyssa Eucker</td>
+                <td>Relief Society Secretary</td>
+                <td><a href="tel:+14802203045">(480) 220-3045</a></td>  
+            </tr>
+            <tr>
+                <td>Taniel Rena Dance</td>
+                <td>Young Women President</td>
+                <td><a href="tel:+12082273306">(208) 227-3306</a></td> 
+            </tr>
+            <tr>
+                <td>Elisha Marie Adams</td>
+                <td>Young Women First Counselor</td>
+                <td><a href="tel:+12149984241">(214) 998-4241</a></td>  
+            </tr>
+            <tr>
+                <td>Gabrielle Nicole DeLaRosa</td>
+                <td>Young Women Second Counselor</td>
+                <td><a href="tel:+12088302538">(208) 830-2538</a></td>  
+            </tr> 
+            <tr>
+                <td>Katie Lewis</td>
+                <td>Young Women Secretary</td>
+                <td><a href="tel:+12088600929">(208) 860-0929</a></td>  
+            </tr>
+            <tr>
+                <td>Mike Seat</td>
+                <td>Sunday School President</td>
+                <td><a href="tel:+12088803096">(208) 880-3096</a></td>  
+            </tr>
+            <tr>
+                <td>Joseph Bidwell</td>
+                <td>Sunday School First Counselor</td>
+                <td><a href="tel:+12082061862">(208) 206-1862</a></td>  
+            </tr>   
+            <tr>
+                <td>Jared Crossman</td>
+                <td>Sunday School Second Counselor</td>
+                <td><a href="tel:+12089573985">(208) 957-3985</a></td>  
+            </tr>
+            <tr>
+                <td>Donald Cook</td>
+                <td>Sunday School Secretary</td>
+                <td><a href="tel:+13035644200">(303) 564-4200</a></td>
+            </tr>
+            <tr>
+                <td>Morgan Lynn Lott</td>
+                <td>Primary President</td>
+                <td><a href="tel:+14807105924">(480) 710-5924</a></td>  
+            </tr>
+            <tr>
+                <td>Libbie Fairchild</td>
+                <td>Primary First Counselor</td>
+                <td><a href="tel:+18089310274">(808) 931-0274</a></td>  
+            </tr>   
+            <tr>
+                <td>Krista Owens</td>
+                <td>Primary Second Counselor</td>
+                <td><a href="tel:+12089081901">(208) 908-1901</a></td>  
+            </tr>
+            <tr>
+                <td>Chloe Royce</td>
+                <td>Primary Secretary</td>
+                <td><a href="tel:+12094959501">(209) 495-9501</a></td>
+            </tr>
+            <tr>
+                <td>Tom Eucker</td>
+                <td>Ward Temple and Family History Leader</td>
+                <td><a href="tel:+15037137929">(503) 713-7929</a></td>  
+            </tr>
+            <tr>
+                <td>Debra Miles</td>
+                <td>Ward Temple and Family History Consultant</td>
+                <td><a href="tel:+12088807093">(208) 880-7093</a></td>  
+            </tr>   
+            <tr>
+                <td>Jared Owens</td>
+                <td>Ward Mission Leader</td>
+                <td><a href="tel:+12089081899">(208) 908-1899</a></td>  
+            </tr> 
+            <tr>
+                <td>Ruthann Eucker</td>
+                <td>History Specialist</td>
+                <td><a href="tel:+14802203046">(480) 220-3046</a></td>  
+            </tr>
+            <tr>
+                <td>Benjamin Gowers</td>
+                <td>Music Coordinator</td>
+                <td><a href="tel:+12088668867">(208) 866-8867</a></td> 
+            </tr>
+            <tr>
+                <td>Evelyn Heaton</td>
+                <td>Accompanist</td>
+                <td><a href="tel:+12082041786">(208) 204-1786</a></td>  
+            </tr>
+            <tr>
+                <td>Robert Abraham</td>
+                <td>Technology Specialist</td>
+                <td><a href="tel:+12086151674">(208) 615-1674</a></td>  
+            </tr> 
+            <tr>
+                <td>Rob Navarro</td>
+                <td>Email Communication Specialist</td>
+                <td><a href="tel:+12085650683">(208) 565-0683</a></td>  
+            </tr>  
+            <tr>
+                <td>Linda Wilhelmsen</td>
+                <td>Silver Sisters Coordinator</td>
+                <td><a href="tel:+12086978490">(208) 697-8490</a></td>  
+            </tr>  
+            <tr>
+                <td>Name</td>
+                <td>Ward Building Coordinator</td>
+                <td><a href="tel:+1"></a></td>  
+            </tr>  
+        </table>
+            <hr>
+            <a href="mailto:29thwardbulletin@gmail.com?subject=29th%20Ward%20Bulletin%20Request">Click Here</a> to submit an announcement to the ward bulletin.
+            <hr>
+            <img src="sacrament.jpg" alt="Footer Image" class="banner">
+    </div>
+    <script>
+        // Replace with your Google Sheet ID and API Key
+        const SHEET_ID = '1ypZ1VciQa5WLGJnTCc08Pe0RTZ6TJYuKf8QPwc6sv7w';
+        const API_KEY = 'AIzaSyCXaK1uxsA4c0yXauCkyieaz1YaO2QRKqE';
+        const RANGE = 'Program29!B1:Z'; // Adjust range as needed
 
-  <script>
-    // Replace 'YOUR_FORM_ID' with the actual ID of your Google Form.
-    // Replace 'YOUR_SHEET_ID' with the actual ID of the Google Sheet connected to your Google Form.
-    const formId = 'd/e/1FAIpQLSfMc_K78syGMc2BHg6hhsvCLsowMqG8eeshFZmFWdNUpKsG9A/viewform';
-    const sheetId = 'd/1bVPMjklOpeV56bZ5ryXh-1DUFc8Xpw4dpsI9zFrO-Dw/edit';
+        async function fetchSheetData() {
+            try {
+                const response = await fetch(
+                    `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`
+                );
+                const data = await response.json();
+                
+                if (data.values && data.values.length > 0) {
+                    displayData(data.values);
+                } else {
+                    document.getElementById('tableBody').innerHTML = '<tr><td colspan="2">No data found</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('tableBody').innerHTML = '<tr><td colspan="2">Error loading data</td></tr>';
+            }
+        }
 
-    function fetchAndDisplayContent() {
-      const sheetUrl = `https://docs.google.com/spreadsheets/d/e/${sheetId}/pub?output=csv`;
+        function displayData(values) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = ''; // Clear existing content
 
-      fetch(sheetUrl)
-        .then(response => response.text())
-        .then(csvData => {
-          const rows = csvData.split('\n');
-          const headers = rows[0].split(',');
-          const data = rows.slice(1).map(row => {
-            const values = row.split(',');
-            const obj = {};
+            // Get headers (first row)
+            const headers = values[0];
+            
+            // Get rest of the data (excluding headers)
+            const dataRows = values.slice(1);
+
+            // Create rows for each header
             headers.forEach((header, index) => {
-              obj[header] = values[index];
+                const tr = document.createElement('tr');
+                
+                // Header cell
+                const th = document.createElement('td');
+                th.className = 'header-column';
+                th.textContent = header;
+                tr.appendChild(th);
+
+                // Data cell
+                const td = document.createElement('td');
+                // Collect all values for this column
+                const columnData = dataRows.map(row => row[index] || '').join('<br>');
+                td.innerHTML = columnData;
+                tr.appendChild(td);
+
+                tbody.appendChild(tr);
             });
-            return obj;
-          });
+        }
 
-          // Process the data and generate website content.
-          const contentDiv = document.getElementById('websiteContent');
-          contentDiv.innerHTML = ''; // Clear previous content
-
-          if (data.length > 0 && Object.keys(data[0]).length > 1) { //check if the sheet actually contains data other than the headers.
-            data.forEach(item => {
-              // Example: Create a paragraph for each entry. Customize this based on your form fields.
-              if(item[headers[0]]){ //check if the first column has data, if not skip the row.
-                let content = '<p>';
-                headers.forEach(header => {
-                  if (item[header]) {
-                    content += `<strong>${header}:</strong> ${item[header]}<br>`;
-                  }
-                });
-                content += '</p>';
-                contentDiv.innerHTML += content;
-              }
-    // Fetch and display content initially and then every few seconds.
-    fetchAndDisplayContent();
-    setInterval(fetchAndDisplayContent, 5000); // Refresh every 5 seconds.
-  </script>
-
+        // Fetch data when page loads
+        window.onload = fetchSheetData;
+    </script>
 </body>
 </html>
