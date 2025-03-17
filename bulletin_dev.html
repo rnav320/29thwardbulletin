@@ -52,19 +52,6 @@
                 content += '</p>';
                 contentDiv.innerHTML += content;
               }
-
-            });
-          } else {
-            contentDiv.innerHTML = '<p>Thank You for reading.</p>';
-          }
-
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-          document.getElementById('websiteContent').innerHTML = '<p>Error loading data.</p>';
-        });
-    }
-
     // Fetch and display content initially and then every few seconds.
     fetchAndDisplayContent();
     setInterval(fetchAndDisplayContent, 5000); // Refresh every 5 seconds.
