@@ -284,6 +284,10 @@ After you've met with a member of the Bishopric, you may schedule an appointment
             <img src="sacrament.jpg" alt="Footer Image" class="banner">
     </div>
     <script>
+        // Refresh page every visit
+        window.onload = function() {
+    location.reload(true); //force reload from server, bypassing cache.
+                  };
         // Replace with your Google Sheet ID and API Key
         const SHEET_ID = '1ypZ1VciQa5WLGJnTCc08Pe0RTZ6TJYuKf8QPwc6sv7w';
         const API_KEY = 'AIzaSyCXaK1uxsA4c0yXauCkyieaz1YaO2QRKqE';
